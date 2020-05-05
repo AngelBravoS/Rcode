@@ -49,6 +49,7 @@ Q
 Pt <- function(t){
   library(expm)
   
+  n <-ncol(Q)
   vectoresYValores <- eigen(Q)
   A <- vectoresYValores$vectors
   A1 <- solve(A)
