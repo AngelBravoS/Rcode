@@ -1,46 +1,23 @@
-#matriz P
+######
+#CMTD#
+######
 
-P <-matrix(c(0.5, 0.5, 0, 0, 0, 
-             0.5, 0, 0.5, 0, 0, 
-             0, 0.5, 0, 0.5, 0,
-             0, 0, 0.5, 0, 0.5, 
-             0, 0, 0, 1, 0
-             ), nrow = 5, byrow = TRUE)
-
-P <-matrix(c(0.2, 0.3, 0.5, 
-             0.1, 0, 0.9, 
-             0.55, 0, 0.45
-              ), nrow = 3, byrow = TRUE)
-P
-
-P <-matrix(c(0.0009, 0.0582, 0.9409, 
-             0.0006, 0.0488, 0.9506, 
-             0.0004, 0.0392, 0.9604
+#matrices P
+P1 <-matrix(c(0.8, 0.2, 0, 
+              0.16, 0.68, 0.16, 
+              0, 0.16, 0.84
 ), nrow = 3, byrow = TRUE)
-P
+P1
 
+P2 <-matrix(c(0.7, 0.15, 0.15, 
+              0.3, 0.6, 0.1, 
+              0, 0.4, 0.6
+), nrow = 3, byrow = TRUE)
 
-P <-matrix(c(0.03, 0.97,
-             0.02, 0.98 
-          ), nrow = 2, byrow = TRUE)
-P
+P2
 
-P <-matrix(c(0.5, 0.2,
-             0.6, 0 
-              ), nrow = 2, byrow = TRUE)
-Q
-
-
-Q <-matrix(c(0, 0.2,
-             0.3, 0.4 
-            ), nrow = 2, byrow = TRUE)
-Q
-
-B <-matrix(c(0.3, 0,
-             0, 0.3 
-), nrow = 2, byrow = TRUE)
-B
-#CMTD
+P <- P1
+P <- P2
 
 #Función para el cálculo de la matriz P^n
 matrizPn <- function(n){
@@ -51,19 +28,21 @@ matrizPn <- function(n){
   }
 }
 
-matrizPn(1)
-
 #Función para el cálculo de la matriz Mn 
-#número esperado de visitas
+#Tiempo medio de permanencia
+#número esperado de visitas en el instante n
 matrizMn <- function(n){
-  n <- ncol(P)
-  I <- diag(n)
-  
-  Mn <- (I-matrizPn(n+1))*solve(I-P)
+  k <- ncol(P)
+  I <- diag(k)
+  sumP <- matrix(0, nrow = k, ncol = k)
+  for (i in 1:n) {
+    sumP <- sumP+matrizPn(i) 
+  }
+  Mn <- I+sumP
   return(Mn)
 }
 
-matrizMn(3)
+matrizMn(2)
 
 #Función para el cálculo del vector de transiciones
 vectorPi <- function(){
@@ -80,7 +59,8 @@ vectorPi <- function(){
 
 vectorPi()
 
-# Elemento rj
+#Vector rj
+#VIGILA LOS ÍNDICES/ESTADOS
 rj <- function(j){
   Pestr <- P[-j,-j]
   n <- ncol(Pestr)
@@ -98,6 +78,11 @@ rj <- function(j){
 rj(3)
 
 
+
+
+
+
+#Diplomatura, no interesa
 #Función para el cálculo de la matriz RQ
 matrizRQ <- function(n){
   n <- ncol(Q)
@@ -130,8 +115,3 @@ matrizF <- function(){
 
 F <- matrizF()
 F
-
-
-
-
-
